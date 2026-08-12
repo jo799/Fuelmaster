@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-bg: #081018;
+  --color-panel: #101b26;
+  --color-card: #132330;
+  --color-card-hover: #16293a;
+  --color-border: rgba(255, 255, 255, 0.05);
+  --color-border-strong: rgba(255, 255, 255, 0.09);
+
+  --color-accent: #f9a826;
+  --color-accent-soft: rgba(249, 168, 38, 0.12);
+  --color-success: #17c964;
+  --color-success-soft: rgba(23, 201, 100, 0.12);
+  --color-warning: #f5a524;
+  --color-warning-soft: rgba(245, 165, 36, 0.12);
+  --color-danger: #f31260;
+  --color-danger-soft: rgba(243, 18, 96, 0.12);
+  --color-info: #38bdf8;
+  --color-info-soft: rgba(56, 189, 248, 0.12);
+
+  --color-text: #e6edf3;
+  --color-text-dim: #8b98a5;
+  --color-text-faint: #5b6a78;
+
+  /* Chart internals (recharts tick/tooltip/gridline colors) are passed as
+     plain SVG/CSS attribute strings rather than Tailwind classes, so they
+     need their own theme-aware custom properties \u2014 var() works fine as
+     an SVG fill/stroke value in every modern browser. */
+  --chart-tick: #5b6a78;
+  --chart-tooltip-bg: #132330;
+  --chart-grid: rgba(255, 255, 255, 0.05);
+  --chart-tooltip-border: rgba(255, 255, 255, 0.08);
+
+  --radius-card: 12px;
+  --content-padding: 20px;
+  --content-gap: 16px;
+}
+
+/* Compact density (Settings > Appearance > Dashboard Density). Real but
+   intentionally scoped: it adjusts the main content area's outer padding
+   and top-level section spacing rather than reaching into every individual
+   card's internal padding across every page \u2014 that would mean touching
+   dozens of files for a cosmetic density toggle. This still gives a real,
+   visible "more compact overall" effect, it's just not exhaustive. */
+.compact {
+  --content-padding: 12px;
+  --content-gap: 10px;
+}
+
+/* Light mode overrides. Toggled via a `.light` class on <html>, driven by
+   Settings > Appearance > Mode. Only surface colors (backgrounds, borders,
+   text, chart chrome) change here \u2014 the accent/success/warning/danger/info
+   hues stay the same across both themes since they read fine on both, and
+   accent color already has its own independent user-configurable override. */
+:root.light {
+  --color-bg: #f3f5f7;
+  --color-panel: #ffffff;
+  --color-card: #ffffff;
+  --color-card-hover: #f2f4f6;
+  --color-border: rgba(15, 23, 32, 0.08);
+  --color-border-strong: rgba(15, 23, 32, 0.15);
+
+  --color-accent-soft: rgba(249, 168, 38, 0.14);
+  --color-success-soft: rgba(23, 201, 100, 0.13);
+  --color-warning-soft: rgba(245, 165, 36, 0.14);
+  --color-danger-soft: rgba(243, 18, 96, 0.1);
+  --color-info-soft: rgba(56, 189, 248, 0.13);
+
+  --color-text: #101922;
+  --color-text-dim: #4b5b68;
+  --color-text-faint: #7c8a97;
+
+  --chart-tick: #6b7885;
+  --chart-tooltip-bg: #ffffff;
+  --chart-grid: rgba(15, 23, 32, 0.08);
+  --chart-tooltip-border: rgba(15, 23, 32, 0.12);
+}
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+  }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  * {
+    border-color: var(--color-border);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #1e2e3c; border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: #294256; }
+  .light ::-webkit-scrollbar-thumb { background: #d3d9df; }
+  .light ::-webkit-scrollbar-thumb:hover { background: #bcc4cc; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  .font-mono-num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+  }
+  .panel {
+    background-color: var(--color-panel);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Receipt.tsx renders via createPortal(document.body), so it's a sibling of
+   #root, not a child of it. Hiding #root for print leaves only the receipt
+   (and anything else intentionally portaled to body) on the printed page,
+   instead of the whole dashboard printing underneath it. */
+@media print {
+  #root {
+    display: none !important;
+  }
+}
+
+@layer utilities {
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 2.5s linear infinite;
+  }
+}
