@@ -462,7 +462,7 @@ A small number of secondary analytics sub-tabs remain illustrative rather than c
 
 The FCC driver architecture and integration layer are in place; however, vendor-specific FCC protocol parsing has not yet been completed against a production controller specification.
 
-The ATG integration is further developed and includes support for the Veeder-Root protocol.
+The ATG integration is further developed, with Veeder-Root protocol support currently being implemented.
 
 ### Automated Testing
 
