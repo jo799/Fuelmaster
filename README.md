@@ -527,4 +527,3 @@ The architecture diagram included in this README is maintained as:
 docs/architecture.png
 ```
 
-Keep the image file alongside the README when distributing or publishing the project so the architecture section renders correctly.
