@@ -2,9 +2,6 @@
 
 A full-stack forecourt and point-of-sale management platform designed for fuel-station operations, covering multi-station management, real-time pump and tank telemetry, hardware integration, sales, inventory, financial operations, staff management, customer accounts, and day-to-day retail workflows.
 
-Originally scoped for **Waspan Enterprises**, a Nairobi-based petroleum engineering firm, FuelMaster was designed as a technology-driven alternative to manual tank dipping and disconnected point-of-sale and forecourt hardware workflows.
-
----
 
 ## Overview
 
@@ -14,7 +11,6 @@ The platform is designed around a clear separation between the user-facing appli
 
 Where functionality is not yet production-complete—primarily a small number of secondary analytics widgets and vendor-specific FCC protocol parsing—it is explicitly identified under [Known Limitations](#known-limitations).
 
----
 
 ## Architecture
 
